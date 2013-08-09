@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<!-- saved from url=(0074)http://ad.admixer.net/frmtraf.html?ts=4.4&orig=http://kino.obozrevatel.com -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title></title>
+
+</head>
+<body>
+    <script type="text/javascript">
+        window.admixerSm = {};
+        if (!window.JSON) {
+            document.write('<script type="text/javascript" src="http://cdn.admixer.net/scriptlib/JSON.js">' + '<' + '/' + 'script>');
+        }
+    </script>
+
+    <script type="text/javascript">
+        var isFlashSupp = false;
+
+        var asm = window.admixerSm;
+        asm.handleWindowRequest = function (event) {
+            var data = null;
+            try {
+                data = JSON.parse(event.data);
+            }
+            catch (e) { }
+            if (null == data)
+                return;
+            if (data.evType == 'admix_logClick') {
+                var sdata = window.localStorage['sessiondata'];
+                if (!sdata)
+                    sdata = '';
+                var visData = window.localStorage['visitordata'];
+                if (!visData)
+                    visData = '';
+                var vguid = window.localStorage['admguid'];
+                var fsFGuid = CB_Cookie.get('admguid');
+
+                var rdata = window.localStorage['retargdata'];
+                if (!rdata)
+                    rdata = '';
+
+                if (fsFGuid && fsFGuid != vguid) {
+                    vguid = fsFGuid;
+                    visData = '';
+                    sdata = '';
+                }
+                if (!vguid)
+                    vguid = '';               
+                var params = "sessiondata=" + encodeURIComponent(sdata) + '&visitordata=' + encodeURIComponent(visData) + '&admguid=' + vguid + '&retargdata=' + encodeURIComponent(rdata);
+                var xmlhttp = null;
+                if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+                    xmlhttp = new XMLHttpRequest();
+                }
+                else {// code for IE6, IE5
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+
+                xmlhttp.open("POST", data.callUrl, true);
+                xmlhttp.onreadystatechange = function () {
+                    if (xmlhttp.readyState == 4) {
+                        if (xmlhttp.status == 200) {
+                            var adresponse = xmlhttp.responseText;
+                            if (adresponse) {
+                                var respParams = adresponse.split(' ');
+                                window.localStorage['visitordata'] = respParams[0];
+                                if (respParams.length > 1) {
+                                    window.localStorage['sessiondata'] = respParams[1];
+                                    if (respParams.length > 2)
+                                        window.localStorage['admguid'] = respParams[2];
+                                }
+                            }
+                        }
+                        else {
+                            //TODO1: log error
+                        }
+                    }
+                }
+                xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xmlhttp.send(params);
+            }
+            if (data.evType == 'admix_getads') {
+
+                var sdata = window.localStorage['sessiondata'];
+                if (!sdata)
+                    sdata = '';
+                var visData = window.localStorage['visitordata'];
+                if (!visData)
+                    visData = '';
+                var vguid = window.localStorage['admguid'];
+                var fsFGuid = CB_Cookie.get('admguid');
+                if (fsFGuid && fsFGuid != vguid) {
+                    vguid = fsFGuid;
+                    visData = '';
+                    sdata = '';
+                }
+                var rdata = window.localStorage['retargdata'];
+                if (!rdata)
+                    rdata = '';
+                if (!vguid)
+                    vguid = '';
+                var params = "sessiondata=" + encodeURIComponent(sdata) + '&visitordata=' + encodeURIComponent(visData) + '&admguid=' + vguid + '&retargdata=' + encodeURIComponent(rdata);
+
+                var xmlhttp = null;
+                if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+                    xmlhttp = new XMLHttpRequest();
+                }
+                else {// code for IE6, IE5
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+
+                xmlhttp.open("POST", data.callUrl, true);
+                xmlhttp.onreadystatechange = function () {
+                    if (xmlhttp.readyState == 4) {
+                        if (xmlhttp.status == 200) {
+                            var adresponse = JSON.parse(xmlhttp.responseText);
+                            if (adresponse.sData)
+                                window.localStorage['sessiondata'] = adresponse.sData;
+                            if (adresponse.vData)
+                                window.localStorage['visitordata'] = adresponse.vData;
+                            if (adresponse.admguid) {
+                                window.localStorage['admguid'] = adresponse.admguid;
+                                CB_Cookie.set('admguid', adresponse.admguid);
+                            }
+                            var data = { evType: 'admix_onadresponse', adResponse: adresponse };
+                            parent.postMessage(JSON.stringify(data), '*');
+                        }
+                        else {
+                            //TODO1: log error
+                        }
+                    }
+                }
+                xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xmlhttp.send(params);
+            }
+        }
+
+        if (window.addEventListener) {
+            window.addEventListener("message", admixerSm.handleWindowRequest, true);
+        } else if (window.attachEvent) {
+            window.attachEvent("onmessage", admixerSm.handleWindowRequest);
+        }
+
+        var cookie_id = 'admguid';
+        var CB_Cookie =
+        {
+            init: function (cookie_id) {
+                this.cookie_id = cookie_id;
+                this.flash_cookie_ready = false;
+                this.flash_cookie_able = false;
+                this.flash_cookie = null;
+                this.flash_alert = false;
+
+                this.flash_is_ready();
+            },
+
+            flash_is_ready: function () {
+                if (!document.getElementById || !document.getElementById(this.cookie_id)) return;
+                if (!this.get_movie(this.cookie_id)) return;
+
+                this.flash_cookie_ready = true;
+                this.flash_cookie_able = this.flash_cookie.f_cookie_able();
+            },
+
+
+            is_able: function () {
+                if (!this.flash_alert && !(this.flash_cookie_ready && this.flash_cookie_able)) {
+                    this.flash_alert = true;
+                }
+                return (this.flash_cookie_ready && this.flash_cookie_able);
+            },
+
+            del: function (key) {
+                if (!this.is_able()) return;
+                this.flash_cookie.f_delete_cookie(key);
+            },
+
+            get: function (key) {
+                if (!this.is_able()) return;
+                var ret = this.flash_cookie.f_get_cookie(key);
+                return ((ret == 'null') ? '' : ret);
+            },
+
+            set: function (key, val) {
+                if (!this.is_able()) return;
+                this.flash_cookie.f_set_cookie(key, val);
+            },
+
+            get_movie: function () {
+                this.flash_cookie = document[this.cookie_id];
+                return ((this.flash_cookie) ? true : false);
+            }
+        };
+
+        ua = function () {
+            var UNDEF = "undefined",
+		    OBJECT = "object",
+		    SHOCKWAVE_FLASH = "Shockwave Flash",
+		    SHOCKWAVE_FLASH_AX = "ShockwaveFlash.ShockwaveFlash",
+		    FLASH_MIME_TYPE = "application/x-shockwave-flash",
+		    EXPRESS_INSTALL_ID = "SWFObjectExprInst",
+		    ON_READY_STATE_CHANGE = "onreadystatechange",
+
+		    win = window,
+		    doc = document,
+		    nav = navigator,
+            playerVersion = [],
+		    plugin = false,
+		    regObjArr = [],
+		    objIdArr = [],
+		    listenersArr = [],
+		    storedAltContent,
+		    storedAltContentId,
+		    storedCallbackFn,
+		    storedCallbackObj,
+		    isDomLoaded = false,
+		    isExpressInstallActive = false,
+		    dynamicStylesheet,
+		    dynamicStylesheetMedia,
+		    autoHideShow = true;
+
+
+            if (window.ActiveXObject) {
+                var control = null;
+                try {
+                    control = new ActiveXObject('ShockwaveFlash.ShockwaveFlash');
+                }
+                catch (e) {
+                }
+                if (control) {
+                    version = control.GetVariable('$version').substring(4);
+                    version = version.split(',');
+                    playerVersion[0] = parseInt(version[0], 10);
+                    playerVersion[1] = parseInt(version[1], 10) || 0;
+                    playerVersion[2] = parseInt(version[2], 10) || 0;
+                    delete control;
+                }
+            }
+            else if (typeof navigator.plugins['Shockwave Flash'] !== 'undefined') {
+                var words = navigator.plugins['Shockwave Flash'].description.split(' ');
+                var aword;
+                for (var i = 0; i < words.length; ++i) {
+                    if (isNaN(parseInt(words[i])))
+                        continue;
+                    aword = words[i];
+                    version = aword.split('.');
+                    playerVersion[0] = parseInt(version[0], 10);
+                    playerVersion[1] = parseInt(version[1], 10) || 0;
+                    playerVersion[2] = parseInt(version[2], 10) || 0;
+                }
+
+            }
+
+            return { pv: playerVersion };
+        }();
+
+        function hasPlayerVersion(rv) {
+            var pv = ua.pv, v = rv.split(".");
+            v[0] = parseInt(v[0], 10);
+            v[1] = parseInt(v[1], 10) || 0; // supports short notation, e.g. "9" instead of "9.0.0"
+            v[2] = parseInt(v[2], 10) || 0;
+            return (pv[0] > v[0] || (pv[0] == v[0] && pv[1] > v[1]) || (pv[0] == v[0] && pv[1] == v[1] && pv[2] >= v[2])) ? true : false;
+        }
+
+        isFlashSupp = hasPlayerVersion("8");
+
+        window.isOnFrmLoadedInvoced = false;
+        if (!isFlashSupp) {
+            onFrmLoaded();
+        }
+        function flash_ready() {
+            CB_Cookie.init(cookie_id);
+            onFrmLoaded();
+        }
+
+        function onFrmLoaded() {
+            if (window.isOnFrmLoadedInvoced)
+                return;
+            window.isOnFrmLoadedInvoced = true;
+            var d = { evType: 'admix_loaded' };
+            var s = JSON.stringify(d);
+            window.parent.postMessage(s, '*');
+        }
+    </script>
+
+    <script type="text/ecmascript">
+        if (isFlashSupp) {
+            var s = '<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" width="1" height="1" id="admguid">'
+            + '<param name="allowScriptAccess" value="always">'
+            + '<param name="movie" value="/frmtraf.swf">'
+            + '<param name="quality" value="high">'
+            + '<param name="bgcolor" value="#ffcc00">'
+            + '<embed src="/frmtraf.swf" quality="high" bgcolor="#ffcc00" width="1" height="1" name="admguid" align="middle" allowscriptaccess="always" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer">'
+            + '</object>';
+            document.write(s);
+
+            setTimeout(function () { isFlashSupp = false; onFrmLoaded(); }, 200);
+        }
+    </script><object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" width="1" height="1" id="admguid"><param name="allowScriptAccess" value="always"><param name="movie" value="/frmtraf.swf"><param name="quality" value="high"><param name="bgcolor" value="#ffcc00"><embed src="/frmtraf.swf" quality="high" bgcolor="#ffcc00" width="1" height="1" name="admguid" align="middle" allowscriptaccess="always" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"></object>
+
+
+</body></html>

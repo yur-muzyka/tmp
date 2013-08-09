@@ -1,0 +1,1 @@
+var _user = { id: null, name: null };

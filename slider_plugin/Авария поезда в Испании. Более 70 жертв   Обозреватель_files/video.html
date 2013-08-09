@@ -1,0 +1,78 @@
+
+<!-- saved from url=(0043)http://v.obozrevatel.ua/video.aspx?id=46028 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script src="www-widgetapi-vflSEIUSR.js" async=""></script><script type="text/javascript" src="jquery.min(1).js"></script>
+<style type="text/css">
+    body
+    {
+        margin: 0;
+        padding: 0;
+        border: none;
+    }
+    .mContainer
+    {
+        position: relative;
+    }
+    .vContainer
+    {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+    }
+    .image
+    {
+        border: none;
+    }
+    #obozButton
+    {
+        background-image: url('/play-ico.png');
+        background-position: center;
+        background-repeat: no-repeat;
+        z-index: 100;
+        display: block;
+        position: absolute;
+        text-decoration: none;
+    }
+</style>
+
+
+    <script src="iframe_api"></script>
+    </head><body><div class="mContainer" style="width: 480px; height: 360px;">
+        <div class="vContainer" style="width: 480px; height: 360px; margin: -180px 0px 0px -240px;">
+            <div id="player">
+                <a id="obozButton" href="javascript:;" style="width: 480px; height: 360px;"></a>
+                <img class="image" src="46028.jpg" style="width: 480px; height: 360px;">
+            </div>
+        </div>
+    </div>
+    <script>
+        var player;
+        var pWidth = 480;
+        var pHeight = 360;
+        var width = window.innerWidth;
+        var height = window.innerHeight;
+
+        $(document).ready(function () {
+            pHeight = (360 * width) / 480;
+            pWidth = width;
+
+            if (pHeight > height) {
+                pWidth = (480 * height) / 360;
+                pHeight = height;
+            }
+            $(".mContainer").css({ "width": width + "px", "height": height + "px" });
+            $(".vContainer, .image, #obozButton").css({ "width": pWidth + "px", "height": pHeight + "px" });
+            $(".vContainer").css("margin", -(pHeight / 2) + "px 0 0 " + (-pWidth / 2) + "px");
+        });
+
+        $("#obozButton").click(function () {
+            // function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: pHeight,
+                width: pWidth,
+                videoId: 'JeUuWOJNgqw',
+                playerVars: { 'autoplay': 1 }
+            });
+            //  }
+        });
+    </script>
+    </body></html>

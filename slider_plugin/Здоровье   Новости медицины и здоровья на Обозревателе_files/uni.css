@@ -1,0 +1,57 @@
+.spOverfl {width: 110%; overflow: hidden;}
+.banBg {float: left; width: 100%; height: 100%;}
+
+.clear {clear: both; line-height: 1px; height: 1px;margin: 0; padding: 0; font-size: 0;}
+.hr {float:left; width:100%; height: 1px; background: #e1e1e1; margin: 9px 0px 9px 0px;}
+.scrL, .scrR {position: absolute;  cursor: pointer; bottom: 0px; cursor: pointer; height: 20px; width: 19px;}
+.scrL {background-position: -45px 0; right: 21px; background: url(../img/ls.gif) no-repeat;}
+.scrR {background-position: -61px 0; right: 2px; background: url(../img/rs.gif) no-repeat;}
+.infGr {background: url(../img/body_bg.gif) repeat #F2F2F2;}
+.infGr .adv:hover {background: #d9d9d9!important;}
+
+.bgVar1 {background: url(../img/infBg.gif) no-repeat; color: #fff!important; text-shadow: 0 1px #2d2d2d;}
+.bgVar2 {background: url(../img/infBg2.gif) no-repeat; color: #fff!important; text-shadow: 0 1px #2d2d2d;}
+.bgVar3 {background: url(../img/infBg3.gif) no-repeat; color: #000!important; text-shadow: 0 1px #fff;}
+.bgVar1,
+.bgVar2,
+.bgVar3 {font-style: italic; font-weight: bold;}
+.bgVar1:hover,
+.bgVar2:hover {color: #fff!important;}
+.bgVar3:hover {color: #000!important;}
+.bgVar4 {background: url(../img/infBgLeft.gif) no-repeat; color: #fff!important; text-shadow: 0 1px #2d2d2d;}
+.bgVar5 {background: url(../img/infBgLeft2.gif) no-repeat; color: #fff!important; text-shadow: 0 1px #2d2d2d;}
+.bgVar6 {background: url(../img/infBgLeft3.gif) no-repeat; color: #000!important; text-shadow: 0 1px #fff;}
+
+#banUni {font-family: Arial, Helvetica, sans-serif; overflow: hidden; position: relative; border-radius: 3px; text-align: left;}
+#banUni .banSlog {font-size: 11px; line-height: 20px; float:left; -webkit-box-shadow: 0px 4px 4px 0px #c7c7c7; -moz-box-shadow: 0px 4px 4px 0px #c7c7c7; box-shadow: 0px 4px 4px 0px #c7c7c7; height: 24px; padding: 6px 12px 0px 0px; text-decoration: none; text-align: right; border-radius: 4px;}
+#banUni .hor .banSlog {box-shadow: none; height: 90px; padding: 0; width: 112px;}
+#banUni .adv {float: left; position: relative; margin-top: 7px; padding: 0px 0 0px 10px; text-decoration: none; width: 100%;}
+#banUni .showIt {display: block!important;}
+#banUni table {border-collapse: collapse; border: 0px; border: none;}
+#banUni table td {overflow: hidden; padding: 0px; margin: 0px;}
+#banUni table .leftSide {display: block; float: none; height: 100%; margin: 5px 0 0; padding: 0 5px 0 10px; position: relative; vertical-align: top; width: auto;}
+#banUni table .leftSide span.withImg {float: left; position: relative; text-decoration: none; vertical-align: top; width: auto; margin-right: 10px;}
+#banUni table .mLink {margin-right: 5px; white-space: -moz-pre-wrap;}
+#banUni table .adv img {max-height: 80px; max-width: 108px;}
+#banUni table span.bestPrice {left: 128px; bottom: 15px;}
+
+#banUni table .adv {display: table-cell; float: left; margin: 0; text-decoration: none; width: 50%; height: 90px; margin-top: 0px; padding: 0px;}
+
+#banUni .hideAdv {display: none;}
+#banUni img {border: none; border: 0px;}
+#banUni .adv:hover {background: #efefef;}
+#banUni .adv:hover span.forPrice {display: none;}
+#banUni .adv:hover span.bestPrice {display: block;}
+#banUni .adv:hover br {display: none;}
+#banUni .adv img {max-width: 106px; max-height: 78px; border: 0px; border: none;}
+#banUni .leftSide {float: left; margin-right: 6px; position: relative; cursor: pointer;}
+#banUni .textRed {margin-right: 10px; font-size: 11px;}
+#banUni .mLink {float: none; font-size: 14px; color: #225f8d; text-decoration: underline; cursor: pointer; margin-right: 5px; overflow: hidden;}
+#banUni .mLink:hover {text-decoration: none;}
+#banUni a.withImg {text-decoration: none;}
+#banUni .forPrice {float: left; font-size: 11px; color: #000; margin: 7px 0px 0px 0px; width: 108px;}
+#banUni .yelPriceL {white-space: nowrap; float: left; height: 17px; font-size: 11px; color: #000; background: url(../img/yelPriceL.png) 0 0 no-repeat; padding: 2px 3px 0px 13px;}
+#banUni .yelPriceR {position: absolute; background: url(../img/yelPriceR.png) right 0 no-repeat; width: 4px; margin: -2px -7px 0px 0px; height: 19px;}
+#banUni .prFrom {float: left; margin: 2px 3px 0px 0px;}
+#banUni span.bestPrice {float: left; background: url(../img/bestPrice.png); width: 135px; height: 27px; display: none; margin: 8px 0px 0px 0px; cursor: pointer;}
+#banUni span.bestPrice:hover {background: url(../img/bestPrice2.png);}
